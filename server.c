@@ -6,10 +6,11 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2022/12/13 11:34:30 by sersanch         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:42:24 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/minitalk.h"
 #include <signal.h>
 #include <stdlib.h>
 #include <unistd.h>

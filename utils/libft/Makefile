@@ -6,7 +6,7 @@
 #    By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 11:42:15 by sersanch          #+#    #+#              #
-#    Updated: 2022/12/13 11:44:37 by sersanch         ###   ########.fr        #
+#    Updated: 2022/12/13 12:21:37 by sersanch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,4 +85,4 @@ folders:
 
 -include $(DEP)
 
-.PHONY: all clean fclean re norm folders movefiles
+.PHONY: all clean fclean re norm folders
