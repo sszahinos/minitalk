@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:07:21 by sersanch          #+#    #+#             */
-/*   Updated: 2022/12/13 12:24:48 by sersanch         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:32:44 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ void	send_pid(s_pid)
 
 void	signal_handler(int signal, siginfo_t *info, void *context)
 {
+	signal = 0;
+	context = NULL;
+	info = NULL;
 	printf("Llega mensaje de server.\n");
 	exit(0);
 }
@@ -69,7 +72,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 	{
-		ft_printf(ARG_ERROR);
+		printf(ARG_ERROR);
 		exit(0);
 //		send_num((int)argv[1], (int)getpid(), 24);
 //		send_message((int)argv[1], argv[2]);

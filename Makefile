@@ -6,7 +6,7 @@
 #    By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 12:33:55 by sersanch          #+#    #+#              #
-#    Updated: 2022/12/13 15:01:18 by sersanch         ###   ########.fr        #
+#    Updated: 2022/12/13 15:19:22 by sersanch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,12 +76,14 @@ make_libft:
 clean:
 	@make clean -C $(LBF_DIR)
 	@$(RMALL) $(SRC_DIR)/$(OBJ_DIR) $(SRC_DIR)/$(DEP_DIR)
-	@echo "$(CYAN)$(NAME) $(YELLOW)objects and dependencies deleted.$(RESET)"
+	@echo "$(CYAN)$(SRV_NAME)$(YELLOW) and $(CYAN)$(CLI_NAME) \
+	$(YELLOW)objects and dependencies deleted.$(RESET)"
 
 fclean: clean
 	@$(RM) $(SRV_NAME) $(CLI_NAME)
 	@make fclean -C $(LBF_DIR)
-	@echo "$(CYAN)$(NAME)$(YELLOW) deleted.$(RESET)"
+	@echo "$(CYAN)$(SRV_NAME)$(YELLOW) and $(CYAN)$(CLI_NAME) \
+	$(YELLOW)deleted.$(RESET)"
 
 re: fclean all
 
