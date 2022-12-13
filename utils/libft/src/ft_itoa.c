@@ -6,11 +6,12 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 09:37:33 by sersanch          #+#    #+#             */
-/*   Updated: 2022/12/05 09:37:57 by sersanch         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:56:04 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
+#include <stdlib.h>
 
 static int	get_len(long long int n)
 {

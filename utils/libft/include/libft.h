@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itodec.c                                        :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 11:08:29 by sersanch          #+#    #+#             */
-/*   Updated: 2022/12/13 12:00:54 by sersanch         ###   ########.fr       */
+/*   Created: 2022/12/13 11:37:24 by sersanch          #+#    #+#             */
+/*   Updated: 2022/12/13 11:41:40 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#ifndef LIBFT_H
+# define LIBFT_H
 
-int	ft_itodec(long long int bin, int bits)
-{
-	int	dec_num;
-	int	base;
-	int	rem;
-	int	i;
+int		ft_atoi(const char *str);
+int		ft_atoi_bin(int *bits, int n_bits);
+char	*ft_itoa(int n);
+int		*ft_itoa_bin(int n, int n_bits);
+int		ft_itodec(long long int bin, int bits);
 
-	dec_num = 0;
-	base = 1;
-	i = 0;
-	while (i < bits)
-	{
-		rem = bin % 10;
-		dec_num += rem * base;
-		bin = bin / 10;
-		base = base * 2;
-	}
-	return (dec_num);
-}
+#endif

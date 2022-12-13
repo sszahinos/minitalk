@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2022/12/13 10:46:49 by sersanch         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:34:30 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 
 	if (info->si_pid != 0)
 		c_pid = info->si_pid;
-	printf("pid> %d\n", c_pid);
+	printf("Signal caught PID> %d\n", c_pid);
+	printf("Sending confirmation...\n");
 	kill(c_pid, SIGUSR1);
 }
 

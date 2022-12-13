@@ -6,11 +6,11 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 10:16:58 by sersanch          #+#    #+#             */
-/*   Updated: 2022/12/05 10:26:43 by sersanch         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:58:27 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 #include <stdlib.h>
 
 int	*ft_itoa_bin(int n, int n_bits)
@@ -18,6 +18,7 @@ int	*ft_itoa_bin(int n, int n_bits)
 //  int n_bits = 32;
  // int input = 99999;
 	int *bits;
+	int	bit;
  
 	bits = malloc(sizeof(int) * n_bits);
 	if (!bits)
@@ -25,10 +26,11 @@ int	*ft_itoa_bin(int n, int n_bits)
 	bit = 0;
 	while (bit < n_bits)
 	{
-		bits[(n_bits - 1) - bit ] = input & 1;
-		input >>= 1;
+		bits[(n_bits - 1) - bit ] = n & 1;
+		n >>= 1;
 		bit++;
 	}
+	return (bits);
 }
 
 /*
