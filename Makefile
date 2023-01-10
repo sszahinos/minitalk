@@ -6,11 +6,12 @@
 #    By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 12:33:55 by sersanch          #+#    #+#              #
-#    Updated: 2023/01/10 13:10:42 by sersanch         ###   ########.fr        #
+#    Updated: 2023/01/10 14:42:33 by sersanch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ##### VARIABLES #####
+NAME		= minitalk
 SRV_NAME	= server
 CLI_NAME	= client
 LBF_NAME	= libft.a 
@@ -24,7 +25,7 @@ INC_DIR = include
 LBF_DIR = utils/libft
 TST_DIR = test
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -MMD
 NORM	= norminette -R CheckForbiddenSourceHeader
 RM		= rm -f
 RMALL	= rm -rf
@@ -55,36 +56,24 @@ DEP_CLI	= $(addprefix $(SRC_DIR)/$(DEP_DIR)/, $(addsuffix .d, $(SRC_CLI_FILES)))
 
 
 ##### RULES #####
-all: make_libft folders $(SRV_NAME) $(CLI_NAME)
+all: make_libft $(NAME) $(SRV_NAME) $(CLI_NAME)
 
-$(SRV_NAME):
-	gcc -I ./include/minitalk.h ./utils/libft/libft.a ./src/server.c -o server
+$(NAME): $(SRV_NAME) $(CLI_NAME)
+
+$(SRV_NAME): 
+	@$(CC) $(CFLAGS) $(INCLUDE) ./$(INC_DIR)/$(HEADER) ./$(SRC_SRV) ./$(LBF_DIR)/$(LBF_NAME) -o $(SRV_NAME).out
+	@echo "$(BOLD)$(LMAGENTA)$(SRV_NAME) $(GREEN)compilated succesfully!$(RESET)"
 
 $(CLI_NAME):
-	$(CC) $(INCLUDE) $(INC_DIR)/$(HEADER) ./src/client.c -o $(CLI_NAME)
-
-#%.o: %.c
-#	$(CC) -o $<
-
-#$(SRC_DIR)/$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/$(HEADER) $(LBF_DIR)/$(LBF_NAME) Makefile
-#	@echo "> $<"
-#	$(CC) $(CFLAGS) -MMD $(INCLUDE) $(INC_DIR)/$(HEADER) $(LBF_DIR)/$(LBF_NAME) -o $< 
-#	@echo "$(CYAN)$< $(GREEN)✓$(RESET)"
-
-#$(SRV_NAME): #$(OBJ_SRV)
-#	echo "prueba"
-#	@$(CC) $(CFLAGS) $(INCLUDE) $(INC_DIR)/$(HEADER) $(LBF_DIR)/$(LBF_NAME) -o $(SRV_NAME)
-#	@echo "$(BOLD)$(LMAGENTA)$(NAME) $(GREEN)compilated succesfully!$(RESET)"
-
-#$(CLI_NAME): $(OBJ_CLI)
-#	@echo "$(BOLD)$(LMAGENTA)$(NAME) $(GREEN)compilated succesfully!$(RESET)"
+	@$(CC) $(CFLAGS) $(INCLUDE) ./$(INC_DIR)/$(HEADER) ./$(SRC_CLI) ./$(LBF_DIR)/$(LBF_NAME) -o $(CLI_NAME).out
+	@echo "$(BOLD)$(LMAGENTA)$(CLI_NAME) $(GREEN)compilated succesfully!$(RESET)"
 
 make_libft:
 	@make -C $(LBF_DIR)
 
 clean:
 	@make clean -C $(LBF_DIR)
-	# $(RMALL) $(SRC_DIR)/$(OBJ_DIR) $(SRC_DIR)/$(DEP_DIR)
+	@$(RMALL) $(SRC_DIR)/$(OBJ_DIR) $(SRC_DIR)/$(DEP_DIR)
 	@echo "$(CYAN)$(SRV_NAME)$(YELLOW) and $(CYAN)$(CLI_NAME) \
 	$(YELLOW)objects and dependencies deleted.$(RESET)"
 
