@@ -6,7 +6,7 @@
 #    By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 12:33:55 by sersanch          #+#    #+#              #
-#    Updated: 2023/01/10 14:42:33 by sersanch         ###   ########.fr        #
+#    Updated: 2023/01/10 18:46:26 by sersanch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ INC_DIR = include
 LBF_DIR = utils/libft
 TST_DIR = test
 
-CFLAGS	= -Wall -Wextra -Werror -MMD
+CFLAGS	= -Wall -Wextra -Werror
 NORM	= norminette -R CheckForbiddenSourceHeader
 RM		= rm -f
 RMALL	= rm -rf
@@ -47,25 +47,38 @@ SRC_SRV_FILES	= server
 SRC_CLI_FILES	= client
 
 SRC_SRV	= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_SRV_FILES)))
-OBJ_SRV	= $(addprefix $(SRC_DIR)/$(OBJ_DIR)/, $(addsuffix .o, $(SRC_SRV_FILES)))
+OBJ_SRV = $(addprefix $(SRC_DIR)/$(OBJ_DIR)/, $(addsuffix .o, $(SRC_SRV_FILES)))
 DEP_SRV	= $(addprefix $(SRC_DIR)/$(DEP_DIR)/, $(addsuffix .d, $(SRC_SRV_FILES)))
 
 SRC_CLI	= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_CLI_FILES)))
-OBJ_CLI	= $(addprefix $(SRC_DIR)/$(OBJ_DIR)/, $(addsuffix .o, $(SRC_CLI_FILES)))
+OBJ_CLI = $(addprefix $(SRC_DIR)/$(OBJ_DIR)/, $(addsuffix .o, $(SRC_CLI_FILES)))
 DEP_CLI	= $(addprefix $(SRC_DIR)/$(DEP_DIR)/, $(addsuffix .d, $(SRC_CLI_FILES)))
 
 
 ##### RULES #####
-all: make_libft $(NAME) $(SRV_NAME) $(CLI_NAME)
+all: make_libft folders $(NAME) 
 
-$(NAME): $(SRV_NAME) $(CLI_NAME)
+$(NAME): $(OBJ_SRV) $(OBJ_CLI)
+	@$(SRV_NAME)
+	@$(CLI_NAME)
+	@echo "$(BOLD)$(LMAGENTA)$(NAME) $(GREEN)compilated succesfully!$(RESET)"
 
+##### OBJ COMPILER #####
+$(OBJ_SRV): $(SRC_SRV) $(INC_DIR)/$(HEADER) $(LBF_DIR)/$(LBF_NAME) Makefile
+	@$(CC) $(CFLAGS) -MMD $(INCLUDE) $(INC_DIR)/$(HEADER) -c $< -o $@
+	@echo "$(CYAN)$< $(GREEN)✓$(RESET)"
+
+$(OBJ_CLI): $(SRC_CLI) $(INC_DIR)/$(HEADER) $(LBF_DIR)/$(LBF_NAME) Makefile
+	@$(CC) $(CFLAGS) -MMD $(INCLUDE) $(INC_DIR)/$(HEADER) -c $< -o $@
+	@echo "$(CYAN)$< $(GREEN)✓$(RESET)"
+
+##### EXEC COMPILER #####
 $(SRV_NAME): 
-	@$(CC) $(CFLAGS) $(INCLUDE) ./$(INC_DIR)/$(HEADER) ./$(SRC_SRV) ./$(LBF_DIR)/$(LBF_NAME) -o $(SRV_NAME).out
+	@$(CC) $(CFLAGS) $(INCLUDE) $(INC_DIR)/$(HEADER) $(OBJ_SRV) $(LBF_DIR)/$(LBF_NAME) -o $(SRV_NAME)
 	@echo "$(BOLD)$(LMAGENTA)$(SRV_NAME) $(GREEN)compilated succesfully!$(RESET)"
 
-$(CLI_NAME):
-	@$(CC) $(CFLAGS) $(INCLUDE) ./$(INC_DIR)/$(HEADER) ./$(SRC_CLI) ./$(LBF_DIR)/$(LBF_NAME) -o $(CLI_NAME).out
+$(CLI_NAME): 
+	@$(CC) $(CFLAGS) $(INCLUDE) $(INC_DIR)/$(HEADER) $(OBJ_CLI) $(LBF_DIR)/$(LBF_NAME) -o $(CLI_NAME)
 	@echo "$(BOLD)$(LMAGENTA)$(CLI_NAME) $(GREEN)compilated succesfully!$(RESET)"
 
 make_libft:
@@ -95,9 +108,9 @@ folders:
 	@$(MKDIR) $(SRC_DIR)/$(OBJ_DIR)
 	@$(MKDIR) $(SRC_DIR)/$(DEP_DIR)
 
-import_utils:
-	@cp $(LBF_DIR)/$(LBF_NAME) ./$(NAME)
-	@echo "$(GREEN)Imported $(CYAN)$(LBF_NAME)$(RESET)"
+#import_utils:
+#	@cp $(LBF_DIR)/$(LBF_NAME) ./$(NAME)
+#	@echo "$(GREEN)Imported $(CYAN)$(LBF_NAME)$(RESET)"
 
 test:
 	@make re
@@ -114,4 +127,4 @@ test_paco:
 -include $(DEP_SRV)
 -include $(DEP_CLI)
 
-.PHONY: all clean fclean re norm folders make_libft folders import_utils test test_paco
+.PHONY: all clean fclean re norm make_libft folders test test_paco
