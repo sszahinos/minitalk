@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:07:21 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/10 13:09:55 by sersanch         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:32:44 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int	main(int argc, char **argv)
 	act.sa_flags = SA_SIGINFO;
 	sigemptyset(&act.sa_mask);
 	act.sa_sigaction = signal_handler;
-	/*s_pid = ft_atoi(argv[1]); //DESCOMENTAR
-	send_pid(s_pid);*/ //DESCOMENTAR
+	s_pid = ft_atoi(argv[1]);
+	send_pid(s_pid);
 //	sigaction(SIGUSR1, &act, NULL);
 /*	while (1)
 	{

@@ -6,7 +6,7 @@
 #    By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 12:33:55 by sersanch          #+#    #+#              #
-#    Updated: 2022/12/13 15:19:22 by sersanch         ###   ########.fr        #
+#    Updated: 2023/01/10 13:10:42 by sersanch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,25 +57,34 @@ DEP_CLI	= $(addprefix $(SRC_DIR)/$(DEP_DIR)/, $(addsuffix .d, $(SRC_CLI_FILES)))
 ##### RULES #####
 all: make_libft folders $(SRV_NAME) $(CLI_NAME)
 
-$(SRC_DIR)/$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/$(HEADER) $(LBF_DIR)/$(LBF_NAME) Makefile
-	@$(CC) $(CFLAGS) -MMD $(INCLUDE) $(INC_DIR)/$(HEADER) -c $< -o $@
-	@echo "$(CYAN)$< $(GREEN)✓$(RESET)"
+$(SRV_NAME):
+	gcc -I ./include/minitalk.h ./utils/libft/libft.a ./src/server.c -o server
 
-$(SRV_NAME): $(OBJ_SRV)
-	@make import_utils
-	@$(AR) $(SRV_NAME) $(OBJ_SRV)
-	@echo "$(BOLD)$(LMAGENTA)$(NAME) $(GREEN)compilated succesfully!$(RESET)"
+$(CLI_NAME):
+	$(CC) $(INCLUDE) $(INC_DIR)/$(HEADER) ./src/client.c -o $(CLI_NAME)
 
-$(CLI_NAME): $(OBJ_CLI)
-	@$(AR) $(CLI_NAME) $(OBJ_CLI)
-	@echo "$(BOLD)$(LMAGENTA)$(NAME) $(GREEN)compilated succesfully!$(RESET)"
+#%.o: %.c
+#	$(CC) -o $<
+
+#$(SRC_DIR)/$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/$(HEADER) $(LBF_DIR)/$(LBF_NAME) Makefile
+#	@echo "> $<"
+#	$(CC) $(CFLAGS) -MMD $(INCLUDE) $(INC_DIR)/$(HEADER) $(LBF_DIR)/$(LBF_NAME) -o $< 
+#	@echo "$(CYAN)$< $(GREEN)✓$(RESET)"
+
+#$(SRV_NAME): #$(OBJ_SRV)
+#	echo "prueba"
+#	@$(CC) $(CFLAGS) $(INCLUDE) $(INC_DIR)/$(HEADER) $(LBF_DIR)/$(LBF_NAME) -o $(SRV_NAME)
+#	@echo "$(BOLD)$(LMAGENTA)$(NAME) $(GREEN)compilated succesfully!$(RESET)"
+
+#$(CLI_NAME): $(OBJ_CLI)
+#	@echo "$(BOLD)$(LMAGENTA)$(NAME) $(GREEN)compilated succesfully!$(RESET)"
 
 make_libft:
 	@make -C $(LBF_DIR)
 
 clean:
 	@make clean -C $(LBF_DIR)
-	@$(RMALL) $(SRC_DIR)/$(OBJ_DIR) $(SRC_DIR)/$(DEP_DIR)
+	# $(RMALL) $(SRC_DIR)/$(OBJ_DIR) $(SRC_DIR)/$(DEP_DIR)
 	@echo "$(CYAN)$(SRV_NAME)$(YELLOW) and $(CYAN)$(CLI_NAME) \
 	$(YELLOW)objects and dependencies deleted.$(RESET)"
 
