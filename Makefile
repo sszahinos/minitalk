@@ -6,7 +6,7 @@
 #    By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 12:33:55 by sersanch          #+#    #+#              #
-#    Updated: 2023/01/10 18:46:26 by sersanch         ###   ########.fr        #
+#    Updated: 2023/01/11 10:39:43 by sersanch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,10 +58,7 @@ DEP_CLI	= $(addprefix $(SRC_DIR)/$(DEP_DIR)/, $(addsuffix .d, $(SRC_CLI_FILES)))
 ##### RULES #####
 all: make_libft folders $(NAME) 
 
-$(NAME): $(OBJ_SRV) $(OBJ_CLI)
-	@$(SRV_NAME)
-	@$(CLI_NAME)
-	@echo "$(BOLD)$(LMAGENTA)$(NAME) $(GREEN)compilated succesfully!$(RESET)"
+$(NAME): $(OBJ_SRV) $(OBJ_CLI) $(SRV_NAME) $(CLI_NAME)
 
 ##### OBJ COMPILER #####
 $(OBJ_SRV): $(SRC_SRV) $(INC_DIR)/$(HEADER) $(LBF_DIR)/$(LBF_NAME) Makefile
