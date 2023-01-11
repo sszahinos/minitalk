@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:07:21 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/10 14:12:26 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:40:35 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,9 @@ int	main(int argc, char **argv)
 	act.sa_sigaction = signal_handler;
 	s_pid = ft_atoi(argv[1]);
 	send_pid(s_pid);
-//	sigaction(SIGUSR1, &act, NULL);
-/*	while (1)
-	{
-		printf("Client PID> %d\n", c_pid);
-		send_pid(9211);
-		sleep(10);
-	}*/
+	sigaction(SIGUSR1, &act, NULL);
+	while (1)
+		;
 
 	return (0);
 }

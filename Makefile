@@ -6,7 +6,7 @@
 #    By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 12:33:55 by sersanch          #+#    #+#              #
-#    Updated: 2023/01/11 10:39:43 by sersanch         ###   ########.fr        #
+#    Updated: 2023/01/11 11:42:55 by sersanch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,10 +62,12 @@ $(NAME): $(OBJ_SRV) $(OBJ_CLI) $(SRV_NAME) $(CLI_NAME)
 
 ##### OBJ COMPILER #####
 $(OBJ_SRV): $(SRC_SRV) $(INC_DIR)/$(HEADER) $(LBF_DIR)/$(LBF_NAME) Makefile
+	@rm -f server
 	@$(CC) $(CFLAGS) -MMD $(INCLUDE) $(INC_DIR)/$(HEADER) -c $< -o $@
 	@echo "$(CYAN)$< $(GREEN)✓$(RESET)"
 
 $(OBJ_CLI): $(SRC_CLI) $(INC_DIR)/$(HEADER) $(LBF_DIR)/$(LBF_NAME) Makefile
+	@rm -f client
 	@$(CC) $(CFLAGS) -MMD $(INCLUDE) $(INC_DIR)/$(HEADER) -c $< -o $@
 	@echo "$(CYAN)$< $(GREEN)✓$(RESET)"
 
@@ -74,7 +76,7 @@ $(SRV_NAME):
 	@$(CC) $(CFLAGS) $(INCLUDE) $(INC_DIR)/$(HEADER) $(OBJ_SRV) $(LBF_DIR)/$(LBF_NAME) -o $(SRV_NAME)
 	@echo "$(BOLD)$(LMAGENTA)$(SRV_NAME) $(GREEN)compilated succesfully!$(RESET)"
 
-$(CLI_NAME): 
+$(CLI_NAME):
 	@$(CC) $(CFLAGS) $(INCLUDE) $(INC_DIR)/$(HEADER) $(OBJ_CLI) $(LBF_DIR)/$(LBF_NAME) -o $(CLI_NAME)
 	@echo "$(BOLD)$(LMAGENTA)$(CLI_NAME) $(GREEN)compilated succesfully!$(RESET)"
 
