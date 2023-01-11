@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:07:21 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/11 11:40:35 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:29:29 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,11 @@ void	send_message(int pid, char *message)
 	send_num((int)'\0');
 }*/
 
-void	send_pid(s_pid)
+void	send_message(int s_pid, char *message)
 {
 	printf("Sending PID\n");
+	message = "dfasdf";
 	kill(s_pid, SIGUSR1);
-	pause();
-	printf("Recibido!\n");
 	//kill(s_pid, SIGUSR2);
 }
 
@@ -61,8 +60,9 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 	signal = 0;
 	context = NULL;
 	info = NULL;
-	printf("Llega mensaje de server.\n");
-	exit(0);
+	printf("Llega Xmensaje de server.\n");
+	//sleep(3);
+	//exit(5);
 }
 
 int	main(int argc, char **argv)
@@ -74,17 +74,13 @@ int	main(int argc, char **argv)
 	{
 		printf(ARG_ERROR);
 		exit(0);
-//		send_num((int)argv[1], (int)getpid(), 24);
-//		send_message((int)argv[1], argv[2]);
 	}
 	act.sa_flags = SA_SIGINFO;
 	sigemptyset(&act.sa_mask);
 	act.sa_sigaction = signal_handler;
 	s_pid = ft_atoi(argv[1]);
-	send_pid(s_pid);
+	send_message(s_pid, argv[2]);
 	sigaction(SIGUSR1, &act, NULL);
-	while (1)
-		;
-
+	sleep(15);
 	return (0);
 }
