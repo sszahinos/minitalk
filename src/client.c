@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:07:21 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/11 12:29:29 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:43:35 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,20 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 	signal = 0;
 	context = NULL;
 	info = NULL;
-	printf("Llega Xmensaje de server.\n");
+	printf("Llega mensaje de server.\n");
 	//sleep(3);
 	//exit(5);
 }
 
+void	ft_exit(void)
+{
+	printf("Message correctly sended and has been received!\n");
+	exit(0);
+}
+
 int	main(int argc, char **argv)
 {
-	struct sigaction	act;
+	//struct sigaction	act;
 	int					s_pid;
 
 	if (argc != 3)
@@ -75,12 +81,13 @@ int	main(int argc, char **argv)
 		printf(ARG_ERROR);
 		exit(0);
 	}
-	act.sa_flags = SA_SIGINFO;
-	sigemptyset(&act.sa_mask);
-	act.sa_sigaction = signal_handler;
+	//act.sa_flags = SA_SIGINFO;
+	//sigemptyset(&act.sa_mask);
+	//act.sa_sigaction = signal_handler;
 	s_pid = ft_atoi(argv[1]);
 	send_message(s_pid, argv[2]);
-	sigaction(SIGUSR1, &act, NULL);
+	while (1)
+		signal(SIGUSR2, &ft_exit);
 	sleep(15);
 	return (0);
 }
