@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/13 12:46:10 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:34:49 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <stdio.h> //borrar
 
+int	*g_byte_index[2];
 
 void	signal_handler(int signal, siginfo_t *info, void *context)
 {
@@ -33,12 +34,14 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 		c_pid = info->si_pid;
 //	printf("signal> %d? vs %d = %d\n", signal, SIGUSR1, signal == SIGUSR1);
 	if (signal == SIGUSR1)
-	{
-		write(1, "0", 1);
+	{	
+			
+//		write(1, "0", 1);
 	}
 	else
 	{
-		write(1, "1", 1);
+
+//		write(1, "1", 1);
 	}
 	//printf("Signal caught PID> %d\n", c_pid);
 	
@@ -83,9 +86,12 @@ int	main(void)
 {
 	struct sigaction	act;
 
+	g_byte_index[0] = malloc(sizeof(int) * 8);
+	g_byte_index[1] = 0;
 	act.sa_flags = SA_SIGINFO;
     sigemptyset(&act.sa_mask);
     act.sa_sigaction = signal_handler;
 	start_server(act);
+	free(byte_num);
 	return (0);
 }
