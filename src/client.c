@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:07:21 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/11 12:43:35 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:11:36 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,43 +15,60 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h> //borrar
-/*
-void	send_num(int pid, int num, int n_bits)
-{
-	int	*bin_num;
-	int i;
 
-	bin_num = ft_itoa_bin(num, n_bits);
-	i = 0;
-	while (i < n_bits)
-	{
-		if (bin_num[i] == 1)
-			kill(pid, SIGUSR1);
-		else
-			kill(pid, SIGUSR2);
-		i++;
-		pause();
-	}
+static void	send_bit(int pid, int bit)
+{
+//	int	*bin_num;
+//	int i;
+
+	printf("entra bit >%d<\n", bit);
+//	bin_num = ft_itoa_bin(num, n_bits);
+
+//	i = 0;
+//	while (i < n_bits)
+//	{
+	if (bit == 0)
+		kill(pid, SIGUSR1);
+	else
+		kill(pid, SIGUSR2);
+//		i++;
+//		if (!sleep(5))
+//		{
+//			free(bin_num);
+//			exit(2);
+//		}
+//	}
 }
-
-void	send_message(int pid, char *message)
-{
-	int	i;
-
-	i = 0;
-	while (message[i])
-	{
-		send_num((int)message[i]);
-		i++;
-	}
-	send_num((int)'\0');
-}*/
 
 void	send_message(int s_pid, char *message)
 {
-	printf("Sending PID\n");
-	message = "dfasdf";
+	int *char_byte;
+	int	i;
+	
+	printf("Sending message\n");
+//	message_len = ft_strlen(message);
+	while (*message)
+	{
+		printf("entra mensaje\n");
+		char_byte = ft_itoa_bin((int)*message, 8);//paso caracter a byte
+		i = 0;
+		printf("%d%d%d%d%d%d%d%d\n", char_byte[0],char_byte[1],char_byte[2],char_byte[3],char_byte[4],char_byte[5],char_byte[6],char_byte[7]);
+		while (i < 1)//cambiar a 8
+		{
+			printf("manda bit\n");
+			send_bit(s_pid, char_byte[i++]); //mando cada bit del byte
+			sleep(1);
+		}
+		message++;
+	}
+/*	message = "dfasdf";
+	printf("Manda 1\n");
 	kill(s_pid, SIGUSR1);
+	sleep(2);
+	printf("Manda 2\n");
+	kill(s_pid, SIGUSR2);*/
+	//send_num(s_pid, 2, 8);
+	//kill(s_pid, SIGUSR1);
 	//kill(s_pid, SIGUSR2);
 }
 
@@ -65,10 +82,11 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 	//exit(5);
 }
 
-void	ft_exit(void)
+void	ft_exit(int what)
 {
+	what = 1;
 	printf("Message correctly sended and has been received!\n");
-	exit(0);
+	exit(1);
 }
 
 int	main(int argc, char **argv)
@@ -86,8 +104,8 @@ int	main(int argc, char **argv)
 	//act.sa_sigaction = signal_handler;
 	s_pid = ft_atoi(argv[1]);
 	send_message(s_pid, argv[2]);
+	//printf("asdfasdf\n");
 	while (1)
-		signal(SIGUSR2, &ft_exit);
-	sleep(15);
+		signal(SIGUSR2, ft_exit);
 	return (0);
 }

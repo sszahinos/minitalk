@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/11 12:43:37 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:06:47 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,51 @@
 void	signal_handler(int signal, siginfo_t *info, void *context)
 {
 	int	c_pid;
-	
-	signal = 0;
+	printf("\nENTRA\n");	
+	//signal = 0;
 	context = NULL;
 	c_pid = 0;
 	if (!info)
 		return ;
 	if (info->si_pid != 0)
 		c_pid = info->si_pid;
-	printf("Signal caught PID> %d\n", c_pid);
-	printf("Sending confirmation to %d...\n", c_pid);
-	sleep(3);
-	kill(c_pid, SIGUSR2);
+	if (signal == SIGUSR1)
+	{
+		printf("0");
+	}
+	else
+	{
+		printf("1");
+	}
+	//printf("Signal caught PID> %d\n", c_pid);
+	
+	//pause();
+	//printf("Sending confirmation to %d...\n", c_pid);
+	//sleep(3);
+	//kill(c_pid, SIGUSR2);
+	//bits = malloc(sizeof(int) * 8);
+
 }
 
+/*
 // Max PID number 99999 (32 bits)
 void	print_bit(int sig_num)
 {
 	printf("Signal caught >%d<\n", sig_num);
 	//exit(1);
-}
+}*/
 
 void	start_server(struct sigaction act)
 {
 	pid_t	s_pid;
 
 	s_pid = getpid();
-	sigaction(SIGUSR1, &act, NULL);
-	sigaction(SIGUSR2, &act, NULL);
+	printf("> Server started. PID: %d\n", s_pid);
 	while (1)
 	{
-		printf("PID: %d Waiting for signal...\n", (int)s_pid);
+		sigaction(SIGUSR1, &act, NULL); //Empieza 
+		sigaction(SIGUSR2, &act, NULL);
+		//printf("PID: %d Waiting for signal...\n", (int)s_pid);
 		sleep(10);
 	}
 }
