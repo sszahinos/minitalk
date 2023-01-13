@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:08:29 by sersanch          #+#    #+#             */
-/*   Updated: 2022/12/13 12:00:54 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:16:18 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	ft_itodec(long long int bin, int bits)
 		dec_num += rem * base;
 		bin = bin / 10;
 		base = base * 2;
+		i++;
 	}
 	return (dec_num);
 }

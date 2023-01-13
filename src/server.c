@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/13 13:34:49 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:39:36 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@
 #include <unistd.h>
 #include <stdio.h> //borrar
 
-int	*g_byte_index[2];
+int	*g_byte_index = NULL;
 
 void	signal_handler(int signal, siginfo_t *info, void *context)
 {
 	int	c_pid;
+	int	aux;
+	char letter;
 //	write(1, "\nENTRA\n", 7);	
 	//signal = 0;
 	context = NULL;
@@ -33,15 +35,23 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 	if (info->si_pid != 0)
 		c_pid = info->si_pid;
 //	printf("signal> %d? vs %d = %d\n", signal, SIGUSR1, signal == SIGUSR1);
+	aux = g_byte_index[8];
 	if (signal == SIGUSR1)
 	{	
-			
+		g_byte_index[aux] = 0;
 //		write(1, "0", 1);
 	}
 	else
 	{
-
+		g_byte_index[aux] = 1;
 //		write(1, "1", 1);
+	}
+	g_byte_index[8]++;
+	if (g_byte_index[8] == 8)
+	{
+		g_byte_index[8] = 0;
+		letter = ft_itodec(ft_atoi_bin(g_byte_index, 8), 8);
+		write(1, &letter, 1);
 	}
 	//printf("Signal caught PID> %d\n", c_pid);
 	
@@ -85,13 +95,13 @@ void	start_server(struct sigaction act)
 int	main(void)
 {
 	struct sigaction	act;
-
-	g_byte_index[0] = malloc(sizeof(int) * 8);
-	g_byte_index[1] = 0;
+	
+	g_byte_index = malloc(sizeof(int) * 9);
+	g_byte_index[8] = 0;
 	act.sa_flags = SA_SIGINFO;
     sigemptyset(&act.sa_mask);
     act.sa_sigaction = signal_handler;
 	start_server(act);
-	free(byte_num);
+	free(g_byte_index);
 	return (0);
 }
