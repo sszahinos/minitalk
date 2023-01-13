@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:07:21 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/13 12:40:36 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:43:12 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	send_message(int s_pid, char *message, struct sigaction act)
 			write(1, "send_bit\n", 9);
 			send_bit(s_pid, char_byte[i++]);
 			sigaction(SIGUSR1, &act, NULL);
-			if (!sleep(5))
+			if (!sleep(10))
 			{
 				write(1, "Server not responding. Abort!\n", 30);
 				exit(6);
