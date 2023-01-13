@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/13 12:30:26 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:37:15 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 	
 	//pause();
 	//printf("Sending confirmation to %d...\n", c_pid);
-	sleep(2);
+	usleep(100);
 	kill(c_pid, SIGUSR1);
 	//bits = malloc(sizeof(int) * 8);
 }
