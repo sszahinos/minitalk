@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/13 11:06:47 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:30:26 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,33 @@
 void	signal_handler(int signal, siginfo_t *info, void *context)
 {
 	int	c_pid;
-	printf("\nENTRA\n");	
+//	write(1, "\nENTRA\n", 7);	
 	//signal = 0;
 	context = NULL;
 	c_pid = 0;
 	if (!info)
+	{
+		//printf("error\n");
 		return ;
+	}
 	if (info->si_pid != 0)
 		c_pid = info->si_pid;
+//	printf("signal> %d? vs %d = %d\n", signal, SIGUSR1, signal == SIGUSR1);
 	if (signal == SIGUSR1)
 	{
-		printf("0");
+		write(1, "0", 1);
 	}
 	else
 	{
-		printf("1");
+		write(1, "1", 1);
 	}
 	//printf("Signal caught PID> %d\n", c_pid);
 	
 	//pause();
 	//printf("Sending confirmation to %d...\n", c_pid);
-	//sleep(3);
-	//kill(c_pid, SIGUSR2);
+	sleep(2);
+	kill(c_pid, SIGUSR1);
 	//bits = malloc(sizeof(int) * 8);
-
 }
 
 /*
@@ -64,7 +67,7 @@ void	start_server(struct sigaction act)
 		sigaction(SIGUSR1, &act, NULL); //Empieza 
 		sigaction(SIGUSR2, &act, NULL);
 		//printf("PID: %d Waiting for signal...\n", (int)s_pid);
-		sleep(10);
+		//sleep(10);
 	}
 }
 /*
