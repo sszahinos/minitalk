@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/18 11:46:09 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/18 11:51:33 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,11 @@ void	start_server(struct sigaction act)
 
 	s_pid = getpid();
 	printf("> Server started. PID: %d\n", s_pid);
+	sigaction(SIGUSR1, &act, NULL); //Empieza 
+	sigaction(SIGUSR2, &act, NULL);
 	while (1)
 	{
-		sigaction(SIGUSR1, &act, NULL); //Empieza 
-		sigaction(SIGUSR2, &act, NULL);
+
 		//printf("PID: %d Waiting for signal...\n", (int)s_pid);
 		//sleep(10);
 	}
