@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/18 11:51:33 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/18 12:48:56 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,24 @@ int	*g_byte_index = NULL;
 void	signal_handler(int signal, siginfo_t *info, void *context)
 {
 	int	c_pid;
-	int	aux;
+	int	bit;
 	char letter;
-//	write(1, "\nENTRA\n", 7);	
-	//signal = 0;
 	context = NULL;
-	c_pid = 0;
 	if (!info)
 	{
 		//printf("error\n");
 		return ;
 	}
-	if (info->si_pid != 0)
-		c_pid = info->si_pid;
-//	printf("signal> %d? vs %d = %d\n", signal, SIGUSR1, signal == SIGUSR1);
-	aux = g_byte_index[8];
+	c_pid = info->si_pid;
+	bit = g_byte_index[8];
 	if (signal == SIGUSR1)
 	{	
-		g_byte_index[aux] = 0;
+		g_byte_index[bit] = 0;
 //		write(1, "0", 1);
 	}
 	else
 	{
-		g_byte_index[aux] = 1;
+		g_byte_index[bit] = 1;
 //		write(1, "1", 1);
 	}
 	g_byte_index[8]++;
@@ -57,18 +52,9 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 	
 	//pause();
 	//printf("Sending confirmation to %d...\n", c_pid);
-	usleep(100);
+	usleep(700);
 	kill(c_pid, SIGUSR1);
-	//bits = malloc(sizeof(int) * 8);
 }
-
-/*
-// Max PID number 99999 (32 bits)
-void	print_bit(int sig_num)
-{
-	printf("Signal caught >%d<\n", sig_num);
-	//exit(1);
-}*/
 
 void	start_server(struct sigaction act)
 {
