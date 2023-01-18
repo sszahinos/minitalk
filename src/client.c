@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:07:21 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/13 14:38:19 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/18 11:46:05 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	send_bit(int pid, int bit)
 //	int	*bin_num;
 //	int i;
 
-	printf("entra bit >%d<\n", bit);
+//	printf("entra bit >%d<\n", bit);
 //	bin_num = ft_itoa_bin(num, n_bits);
 
 //	i = 0;
@@ -46,14 +46,14 @@ static void	send_message(int s_pid, char *message, struct sigaction act)
 {
 	int	i;
 	
-	printf("Sending message\n");
+//	printf("Sending message\n");
 //	message_len = ft_strlen(message);
 	while (*message)
 	{
-		printf("entra mensaje\n");
+//		printf("entra mensaje\n");
 		char_byte = ft_itoa_bin((int)*message, 8);//paso caracter a byte
 		i = 0;
-		printf("%d%d%d%d%d%d%d%d\n", char_byte[0],char_byte[1],char_byte[2],char_byte[3],char_byte[4],char_byte[5],char_byte[6],char_byte[7]);
+//		printf("%d%d%d%d%d%d%d%d\n", char_byte[0],char_byte[1],char_byte[2],char_byte[3],char_byte[4],char_byte[5],char_byte[6],char_byte[7]);
 		//send_bit(s_pid, char_byte[i++]);
 		while (i < 8)
 		{
@@ -94,13 +94,13 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 	//sleep(3);
 	//exit(5);
 }
-
+/*
 void	ft_exit(int what)
 {
 	what = 1;
 	printf("Message correctly sended and has been received!\n");
 	exit(1);
-}
+}*/
 /* No usar PRINTF de forma asincrona
  * */
 int	main(int argc, char **argv)
