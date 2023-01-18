@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/18 15:58:15 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:09:24 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 {
 	int	c_pid;
 	int	bit;
-	char letter;
+	unsigned char letter;
 	context = NULL;
-	write(1, "LLEGA\n", 6);
+//	printf(">%d<\n", signal);
+//	write(1, "LLEGA\n", 6);
 	if (!info)
 	{
 		//printf("error\n");
@@ -35,27 +36,34 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 	if (signal == SIGUSR1)
 	{	
 		g_byte_index[bit] = 0;
-		write(1, "0", 1);
+//		write(1, "0", 1);
 	}
 	else
 	{
 		g_byte_index[bit] = 1;
-		write(1, "1", 1);
+//		write(1, "1", 1);
 	}
+//	usleep(100);
 	g_byte_index[8]++;
+//	write(1, "X", 1);
 	if (g_byte_index[8] == 8)
 	{
 		g_byte_index[8] = 0;
 		letter = ft_itodec(ft_atoi_bin(g_byte_index, 8), 8);
 		write(1, &letter, 1);
-		write(1, "\n", 1);
+	//	write(1, "-----\n", 6);
+		free(g_byte_index);
+		g_byte_index = malloc(sizeof(int) * 9);
+		g_byte_index[8] = 0;
+	//	exit(0);
 	}
 	//printf("Signal caught PID> %d\n", c_pid);
 	
 	//pause();
 	//printf("Sending confirmation to %d...\n", c_pid);
-	usleep(1000);
+//	usleep(500);
 	kill(c_pid, SIGUSR1);
+//	usleep(500);
 }
 
 void	start_server(struct sigaction act)

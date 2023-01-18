@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:07:21 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/18 15:58:22 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:09:27 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	send_bit(int pid, int bit)
 	else
 		signal = SIGUSR2;
 	kill(pid, signal);
-	pause();
+	usleep(300);
+//	pause();
 }
 
 static void	send_message(int s_pid, char *message, struct sigaction act)
@@ -43,7 +44,9 @@ static void	send_message(int s_pid, char *message, struct sigaction act)
 		while (i < 8)
 		{
 //			write(1, "send_bit\n", 9);
+		//	usleep(200);
 			send_bit(s_pid, char_byte[i++]);
+		//	usleep(500);
 		//	write(1, "after", 5);
 		/*	if (!sleep(10))
 			{
@@ -53,6 +56,7 @@ static void	send_message(int s_pid, char *message, struct sigaction act)
 			else
 				write(1, "OK\n", 3);*/
 		}
+		usleep(500);
 		free(char_byte);
 		message++;
 	}
