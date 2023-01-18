@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/18 14:44:30 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:58:15 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 	int	bit;
 	char letter;
 	context = NULL;
+	write(1, "LLEGA\n", 6);
 	if (!info)
 	{
 		//printf("error\n");
@@ -34,12 +35,12 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 	if (signal == SIGUSR1)
 	{	
 		g_byte_index[bit] = 0;
-//		write(1, "0", 1);
+		write(1, "0", 1);
 	}
 	else
 	{
 		g_byte_index[bit] = 1;
-//		write(1, "1", 1);
+		write(1, "1", 1);
 	}
 	g_byte_index[8]++;
 	if (g_byte_index[8] == 8)
@@ -47,12 +48,13 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 		g_byte_index[8] = 0;
 		letter = ft_itodec(ft_atoi_bin(g_byte_index, 8), 8);
 		write(1, &letter, 1);
+		write(1, "\n", 1);
 	}
 	//printf("Signal caught PID> %d\n", c_pid);
 	
 	//pause();
 	//printf("Sending confirmation to %d...\n", c_pid);
-	usleep(700);
+	usleep(1000);
 	kill(c_pid, SIGUSR1);
 }
 

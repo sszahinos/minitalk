@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:07:21 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/18 13:54:16 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:58:22 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ int *char_byte;
 
 static void	send_bit(int pid, int bit)
 {
+	int	signal;
 //	printf("entra bit >%d<\n", bit);
 	if (bit == 0)
-		kill(pid, SIGUSR1);
+		signal = SIGUSR1;
 	else
-		kill(pid, SIGUSR2);
+		signal = SIGUSR2;
+	kill(pid, signal);
 	pause();
 }
 
