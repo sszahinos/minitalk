@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/18 12:48:56 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:44:30 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	main(void)
 	struct sigaction	act;
 	
 	g_byte_index = malloc(sizeof(int) * 9);
+	if (!g_byte_index)
+		return (1);
 	g_byte_index[8] = 0;
 	act.sa_flags = SA_SIGINFO;
     sigemptyset(&act.sa_mask);
