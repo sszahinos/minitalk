@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:17:08 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/18 18:09:24 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/20 17:00:52 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,26 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdio.h> //borrar
 
-int	*g_byte_index = NULL;
+int	*g_byte_index_id = NULL;
+
+
+static void ft_waiting_message(void)
+{
+	char	*s_pid;
+
+	s_pid = ft_itoa(getpid());
+	write(1, "Waiting for message... PID:\n", 28);
+	write(1, &s_pid, 5);
+}
 
 void	signal_handler(int signal, siginfo_t *info, void *context)
 {
-	int	c_pid;
+//	int	c_pid;
 	int	bit;
 	unsigned char letter;
 	context = NULL;
+	letter = 'X';
 //	printf(">%d<\n", signal);
 //	write(1, "LLEGA\n", 6);
 	if (!info)
@@ -31,55 +41,39 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 		//printf("error\n");
 		return ;
 	}
-	c_pid = info->si_pid;
-	bit = g_byte_index[8];
+	if (g_byte_index_id[9] == -1)
+		g_byte_index_id[9] = info->si_pid;
+	bit = g_byte_index_id[8];
 	if (signal == SIGUSR1)
-	{	
-		g_byte_index[bit] = 0;
-//		write(1, "0", 1);
-	}
+		g_byte_index_id[bit] = 0;
 	else
+		g_byte_index_id[bit] = 1;
+	g_byte_index_id[8]++;
+	if (g_byte_index_id[8] == 8)
 	{
-		g_byte_index[bit] = 1;
-//		write(1, "1", 1);
-	}
-//	usleep(100);
-	g_byte_index[8]++;
-//	write(1, "X", 1);
-	if (g_byte_index[8] == 8)
-	{
-		g_byte_index[8] = 0;
-		letter = ft_itodec(ft_atoi_bin(g_byte_index, 8), 8);
+		g_byte_index_id[8] = 0;
+		letter = ft_itodec(ft_atoi_bin(g_byte_index_id, 8), 8);
 		write(1, &letter, 1);
-	//	write(1, "-----\n", 6);
-		free(g_byte_index);
-		g_byte_index = malloc(sizeof(int) * 9);
-		g_byte_index[8] = 0;
-	//	exit(0);
+
 	}
-	//printf("Signal caught PID> %d\n", c_pid);
-	
-	//pause();
-	//printf("Sending confirmation to %d...\n", c_pid);
-//	usleep(500);
-	kill(c_pid, SIGUSR1);
-//	usleep(500);
+	usleep(100);
+	kill(g_byte_index_id[9], SIGUSR1);
+	if (letter == '\0')
+	{
+		g_byte_index_id[9] = -1;
+		write(1, "\n", 1);
+		ft_waiting_message();
+	}
 }
 
 void	start_server(struct sigaction act)
 {
-	pid_t	s_pid;
-
-	s_pid = getpid();
-	printf("> Server started. PID: %d\n", s_pid);
+	write(1, "> Server started.\n", 18);
+	ft_waiting_message();
 	sigaction(SIGUSR1, &act, NULL); //Empieza 
 	sigaction(SIGUSR2, &act, NULL);
 	while (1)
-	{
-
-		//printf("PID: %d Waiting for signal...\n", (int)s_pid);
-		//sleep(10);
-	}
+		;
 }
 /*
  * sigaction permite personalizar una senyal.
@@ -93,14 +87,15 @@ int	main(void)
 {
 	struct sigaction	act;
 	
-	g_byte_index = malloc(sizeof(int) * 9);
-	if (!g_byte_index)
+	g_byte_index_id = malloc(sizeof(int) * 10);
+	if (!g_byte_index_id)
 		return (1);
-	g_byte_index[8] = 0;
+	g_byte_index_id[8] = 0;
+	g_byte_index_id[9] = -1;
 	act.sa_flags = SA_SIGINFO;
     sigemptyset(&act.sa_mask);
     act.sa_sigaction = signal_handler;
 	start_server(act);
-	free(g_byte_index);
+	free(g_byte_index_id);
 	return (0);
 }
