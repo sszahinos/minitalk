@@ -23,24 +23,32 @@ static void ft_waiting_message(void)
 	char	*s_pid;
 
 	s_pid = ft_itoa(getpid());
-	write(1, "Waiting for message... PID:\n", 28);
-	write(1, &s_pid, 5);
+	write(1, "\nWaiting for message... PID:", 28);
+	ft_putstr(s_pid);
+	write(1, "\n", 1);
+}
+
+static unsigned char	ft_check_letter()
+{
+	unsigned char	letter;
+	
+	if (g_byte_index_id[8] == 8)
+	{
+		g_byte_index_id[8] = 0;
+		letter = ft_itodec(ft_atoi_bin(g_byte_index_id, 8), 8);
+		write(1, &letter, 1);
+
+	}
+	else
+		letter = 'X';
+	return letter;
 }
 
 void	signal_handler(int signal, siginfo_t *info, void *context)
 {
-//	int	c_pid;
 	int	bit;
 	unsigned char letter;
 	context = NULL;
-	letter = 'X';
-//	printf(">%d<\n", signal);
-//	write(1, "LLEGA\n", 6);
-	if (!info)
-	{
-		//printf("error\n");
-		return ;
-	}
 	if (g_byte_index_id[9] == -1)
 		g_byte_index_id[9] = info->si_pid;
 	bit = g_byte_index_id[8];
@@ -49,19 +57,12 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 	else
 		g_byte_index_id[bit] = 1;
 	g_byte_index_id[8]++;
-	if (g_byte_index_id[8] == 8)
-	{
-		g_byte_index_id[8] = 0;
-		letter = ft_itodec(ft_atoi_bin(g_byte_index_id, 8), 8);
-		write(1, &letter, 1);
-
-	}
+	letter = ft_check_letter();
 	usleep(100);
 	kill(g_byte_index_id[9], SIGUSR1);
 	if (letter == '\0')
 	{
 		g_byte_index_id[9] = -1;
-		write(1, "\n", 1);
 		ft_waiting_message();
 	}
 }
@@ -93,8 +94,8 @@ int	main(void)
 	g_byte_index_id[8] = 0;
 	g_byte_index_id[9] = -1;
 	act.sa_flags = SA_SIGINFO;
-    sigemptyset(&act.sa_mask);
-    act.sa_sigaction = signal_handler;
+	sigemptyset(&act.sa_mask);
+	act.sa_sigaction = signal_handler;
 	start_server(act);
 	free(g_byte_index_id);
 	return (0);
