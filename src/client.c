@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
+/*   By: sersanch <sersanch@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:07:21 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/20 17:00:39 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/23 10:17:51 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include <unistd.h>
 #include <signal.h>
 #include <stdlib.h>
-
-int *char_byte;
 
 static void	send_bit(int pid, int bit)
 {
@@ -30,6 +28,7 @@ static void	send_bit(int pid, int bit)
 static int send_byte(char *message, int s_pid)
 {
 	int i;
+	int *char_byte;
 
 	char_byte = ft_itoa_bin((int)*message, 8);
 	i = 0;
