@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+         #
+#    By: sersanch <sersanch@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 11:42:15 by sersanch          #+#    #+#              #
-#    Updated: 2022/12/13 12:21:37 by sersanch         ###   ########.fr        #
+#    Updated: 2023/01/23 10:11:50 by sersanch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,9 @@ SRC_FILES =	ft_atoi \
 			ft_atoi_bin \
 			ft_itoa \
 			ft_itoa_bin \
-			ft_itodec
+			ft_itodec \
+			ft_putchar \
+			ft_putstr
 
 #### NAMING #####
 SRC	= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
