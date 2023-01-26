@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:37:24 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/23 10:08:38 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/26 10:06:11 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ char	*ft_itoa(int n);
 int		*ft_itoa_bin(int n, int n_bits);
 int		ft_itodec(long long int bin, int bits);
 int		ft_putchar(char c);
-int		ft_putstr_fd(char *s);
+int		ft_putstr(char *s);
 
 #endif

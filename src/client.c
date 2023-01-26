@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:07:21 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/23 10:17:51 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/26 10:19:14 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 static void	send_bit(int pid, int bit)
 {
 	int	signal;
+
 	if (bit == 0)
 		signal = SIGUSR1;
 	else
@@ -25,10 +26,10 @@ static void	send_bit(int pid, int bit)
 	kill(pid, signal);
 }
 
-static int send_byte(char *message, int s_pid)
+static int	send_byte(char *message, int s_pid)
 {
-	int i;
-	int *char_byte;
+	int	i;
+	int	*char_byte;
 
 	char_byte = ft_itoa_bin((int)*message, 8);
 	i = 0;
@@ -39,7 +40,7 @@ static int send_byte(char *message, int s_pid)
 		{
 			write(1, "Server not responding...\n", 25);
 			free(char_byte);
-			return (-1);	
+			return (-1);
 		}
 	}
 	free(char_byte);
@@ -73,7 +74,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 	{
-		write(1 , "Arguments error. Abort!\n", 24);
+		write(1, "Arguments error. Abort!\n", 24);
 		return (0);
 	}
 	act.sa_flags = SA_SIGINFO;

@@ -1,6 +1,19 @@
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/26 10:28:30 by sersanch          #+#    #+#             */
+/*   Updated: 2023/01/26 10:29:35 by sersanch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int ft_putchar(char c)
+#include "../include/libft.h"
+#include <unistd.h>
+
+int	ft_putchar(char c)
 {
 	return (write(1, &c, 1));
 }

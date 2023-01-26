@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:34:58 by sersanch          #+#    #+#             */
-/*   Updated: 2022/12/13 11:45:15 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/26 10:24:34 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,3 @@ int	ft_atoi(const char *str)
 	else
 		return (get_int(str, i, sign));
 }
-
