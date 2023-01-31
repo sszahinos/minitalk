@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:10:46 by sersanch          #+#    #+#             */
-/*   Updated: 2023/01/26 14:11:34 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:06:55 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	ft_waiting_message(void)
 	write(1, "\nWaiting for message... PID:", 28);
 	ft_putstr(s_pid);
 	write(1, "\n", 1);
+	free(s_pid);
 }
 
 static unsigned char	ft_check_letter(void)
